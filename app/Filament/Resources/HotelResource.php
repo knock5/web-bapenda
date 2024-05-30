@@ -15,6 +15,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\LinkAction;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -94,29 +96,26 @@ class HotelResource extends Resource
                 TextColumn::make('user.name')->label('Pemilik')->getStateUsing(function ($record) {
                     return "{$record->user->name} (ID: {$record->user->id})";
                 })->sortable()->searchable(),
-                TextColumn::make('email')->label('Email')->sortable()->searchable(),
                 BadgeColumn::make('is_tax_paid')->label('Status')->getStateUsing(function ($record) {
                     return $record->is_tax_paid ? 'Lunas' : 'Belum Lunas';
                 })->colors([
                     'danger' => fn ($state) => $state === 'Belum Lunas',    
                     'success' => fn ($state) => $state === 'Lunas',    
                 ])->sortable()->searchable(),
-                TextColumn::make('phone')->label('Telepon')->sortable()->searchable(),
                 TextColumn::make('address')->label('Alamat')->sortable()->searchable(),
                 TextColumn::make('rating')->label('Rating')->sortable()->searchable(),
-                TextColumn::make('amenities')->label('Fasilitas')->sortable()->searchable(),
-                TextColumn::make('revenue')->label('Pendapatan')->sortable()->searchable(),
                 TextColumn::make('tax_rate')->label('Pajak(%)')->sortable()->searchable(),
-                TextColumn::make('tax_id_number')->label('Pajak ID')->sortable()->searchable(),
                 TextColumn::make('tax_due_date')->label('Jatuh Tempo')->sortable()->searchable(),
-                TextColumn::make('last_tax_payment')->label('Terakhir Pembayaran')->sortable()->searchable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                ActionGroup::make([
+                    LinkAction::make('view')->icon('heroicon-o-eye')->url(fn($record) => route('hotel.detail', $record)),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

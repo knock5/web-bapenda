@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Detail Restaurant</title>
+  <title>Detail Hotel</title>
 
   {{-- CSS Bootstrap --}}
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -13,10 +13,10 @@
   <div class="container py-2">
     <div class="row py-3 justify-content-center align-items-center border-bottom mb-3">
       <div class="col-6">
-        <a href="/dashboard/restaurants" class="btn btn-warning">Kembali</a>
+        <a href="/dashboard/hotels" class="btn btn-warning">Kembali</a>
       </div>
       <div class="col-6">
-        <h2 class="text-end">Detail Restaurant</h2>
+        <h2 class="text-end">Detail Hotel</h2>
       </div>
     </div>
 
@@ -25,57 +25,57 @@
         <table class="table table-bordered text-center">
           <tbody>
             <tr>
-              <td class="table-info">Nama Restaurant</td>
-              <td class="table-warning">{{ $restaurant->name }}</td>
+              <td class="table-info">Nama Hotel</td>
+              <td class="table-warning">{{ $hotel->name }}</td>
             </tr>
             <tr>
               <td class="table-info">ID Pemilik</td>
-              <td class="table-warning">{{ $restaurant->user_id }}</td>
+              <td class="table-warning">{{ $hotel->user_id }}</td>
             </tr>
             <tr>
               <td class="table-info">Email</td>
-              <td class="table-warning">{{ $restaurant->email }}</td>
+              <td class="table-warning">{{ $hotel->email }}</td>
             </tr>
             <tr>
               <td class="table-info">Telepon</td>
-              <td class="table-warning">{{ $restaurant->phone }}</td>
+              <td class="table-warning">{{ $hotel->phone }}</td>
             </tr>
             <tr>
               <td class="table-info">Alamat</td>
-              <td class="table-warning">{{ $restaurant->address }}</td>
+              <td class="table-warning">{{ $hotel->address }}</td>
             </tr>
             <tr>
-              <td class="table-info">Jam Buka</td>
-              <td class="table-warning">{{ $restaurant->opening_hours }}</td>
+              <td class="table-info">Rating</td>
+              <td class="table-warning">{{ $hotel->rating }}</td>
             </tr>
             <tr>
-              <td class="table-info">Jam Tutup</td>
-              <td class="table-warning">{{ $restaurant->closing_hours }}</td>
+              <td class="table-info">Fasilitas</td>
+              <td class="table-warning">{{ $hotel->amenities }}</td>
             </tr>
             <tr>
               <td class="table-info">Pendapatan</td>
-              <td class="table-warning">Rp. {{ number_format($restaurant->revenue, 0, ',', '.') }}</td>
+              <td class="table-warning">Rp. {{ number_format($hotel->revenue, 0, ',', '.') }}</td>
             </tr>
             <tr>
               <td class="table-info">Pajak(%)</td>
-              <td class="table-warning">{{ $restaurant->tax_rate }}</td>
+              <td class="table-warning">{{ $hotel->tax_rate }}</td>
             </tr>
             <tr>
               <td class="table-info">ID Pajak</td>
-              <td class="table-warning">{{ $restaurant->tax_id_number }}</td>
+              <td class="table-warning">{{ $hotel->tax_id_number }}</td>
             </tr>
             <tr>
               <td class="table-info">Tanggal Jatuh Tempo</td>
-              <td class="table-warning">{{ $restaurant->tax_due_date }}</td>
+              <td class="table-warning">{{ $hotel->tax_due_date }}</td>
             </tr>
             <tr>
               <td class="table-info">Tanggal Pembayaran Terakhir</td>
-              <td class="table-warning">{{ $restaurant->last_tax_payment }}</td>
+              <td class="table-warning">{{ $hotel->last_tax_payment }}</td>
             </tr>
             <tr>
               <td class="table-info">Status Pembayaran Pajak</td>
               <td class="table-warning">
-                @if ($restaurant->is_tax_paid)
+                @if ($hotel->is_tax_paid)
                   <span class="badge bg-success">Lunas</span>
                 @else
                   <span class="badge bg-danger">Belum Lunas</span>
@@ -87,7 +87,7 @@
       </div>
     </div>
 
-    @if ($user->id === $restaurant->user_id && $restaurant->is_tax_paid === 0)
+    @if ($user->id === $hotel->user_id && $hotel->is_tax_paid === 0)
       <div class="py-2">
         <button class="btn btn-primary">Bayar Pajak</button>
       </div>

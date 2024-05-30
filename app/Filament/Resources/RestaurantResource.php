@@ -20,7 +20,6 @@ use Filament\Tables\Actions\LinkAction;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RestaurantResource extends Resource
@@ -37,7 +36,8 @@ class RestaurantResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count();
+        $model = static::getModel();
+        return $model ? (string) $model::count() : null;
     }
 
     public static function form(Form $form): Form
@@ -83,29 +83,22 @@ class RestaurantResource extends Resource
                 TextColumn::make('user.name')->label('Pemilik')->getStateUsing(function ($record) {
                     return "{$record->user->name} (ID: {$record->user->id})";
                 })->sortable()->searchable(),
-                TextColumn::make('email')->label('Email')->sortable()->searchable(),
                 BadgeColumn::make('is_tax_paid')->label('Status')->getStateUsing(function ($record) {
                     return $record->is_tax_paid ? 'Lunas' : 'Belum Lunas';
                 })->colors([
                     'danger' => fn ($state) => $state === 'Belum Lunas',    
                     'success' => fn ($state) => $state === 'Lunas',    
                 ])->sortable()->searchable(),
-                TextColumn::make('phone')->label('Telepon')->sortable()->searchable(),
                 TextColumn::make('address')->label('Alamat')->sortable()->searchable(),
-                TextColumn::make('opening_hours')->label('Jam Buka')->sortable()->searchable(),
-                TextColumn::make('closing_hours')->label('Jam Tutup')->sortable()->searchable(),
-                TextColumn::make('revenue')->label('Pendapatan')->sortable()->searchable(),
                 TextColumn::make('tax_rate')->label('Pajak(%)')->sortable()->searchable(),
-                TextColumn::make('tax_id_number')->label('Pajak ID')->sortable()->searchable(),
                 TextColumn::make('tax_due_date')->label('Jatuh Tempo')->sortable()->searchable(),
-                TextColumn::make('last_tax_payment')->label('Terakhir Pembayaran')->sortable()->searchable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
                 ActionGroup::make([
-                    LinkAction::make('view')->url(fn($record) => route('restaurant.detail', $record)),
+                    LinkAction::make('view')->icon('heroicon-o-eye')->url(fn($record) => route('restaurant.detail', $record)),
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),    
                 ])

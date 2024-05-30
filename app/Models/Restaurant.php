@@ -11,6 +11,7 @@ class Restaurant extends Model
     protected $primaryKey = 'restaurant_id';
     protected $fillable = [
         'name',
+        'user_id',
         'email',
         'phone',
         'address',
@@ -23,4 +24,8 @@ class Restaurant extends Model
         'last_tax_payment',
         'is_tax_paid',    
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

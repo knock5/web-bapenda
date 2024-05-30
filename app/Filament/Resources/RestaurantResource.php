@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\RestaurantResource\Pages;
 use App\Filament\Resources\RestaurantResource\RelationManagers;
 use App\Models\Restaurant;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\DatePicker;
@@ -24,7 +25,18 @@ class RestaurantResource extends Resource
 {
     protected static ?string $model = Restaurant::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-storefront';
+
+    protected static ?string $navigationLabel = 'Data Restaurant';
+
+    protected static ?string $navigationGroup = 'Data';
+
+    protected static ?int $navigationSort = 1;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {
@@ -32,6 +44,17 @@ class RestaurantResource extends Resource
             ->schema([
                 Card::make()->schema([
                         TextInput::make('name')->label('Nama Restaurant')->required(),
+                        Select::make('user_id')->label('Pemilik Usaha')
+                            ->options(function () {
+                                return User::whereHas('roles', function ($query) {
+                                    $query->where('name', 'user');
+                                })->get()->mapWithKeys(function ($user) {
+                                    return [$user->id => "{$user->name} (ID: {$user->id})"];
+                                })->toArray();
+                            })
+                            ->required()
+                            ->searchable()
+                            ->preload(),
                         TextInput::make('email')->label('Email')->required(),
                         TextInput::make('phone')->label('Telepon')->required(),
                         TextInput::make('address')->label('Alamat')->required(),
@@ -55,6 +78,9 @@ class RestaurantResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->label('Nama')->sortable()->searchable(),
+                TextColumn::make('user.name')->label('Pemilik')->getStateUsing(function ($record) {
+                    return "{$record->user->name} (ID: {$record->user->id})";
+                })->sortable()->searchable(),
                 TextColumn::make('email')->label('Email')->sortable()->searchable(),
                 BadgeColumn::make('is_tax_paid')->label('Status')->getStateUsing(function ($record) {
                     return $record->is_tax_paid ? 'Lunas' : 'Belum Lunas';

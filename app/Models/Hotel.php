@@ -11,6 +11,7 @@ class Hotel extends Model
     protected $primaryKey = 'hotel_id';
     protected $fillable = [
         'name',
+        'user_id',
         'email',
         'phone',
         'address',
@@ -23,4 +24,8 @@ class Hotel extends Model
         'last_tax_payment',
         'is_tax_paid',    
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

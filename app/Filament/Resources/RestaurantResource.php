@@ -15,6 +15,8 @@ use Filament\Forms\Form;
 use Filament\Tables\Actions;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\LinkAction;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -102,8 +104,11 @@ class RestaurantResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                ActionGroup::make([
+                    LinkAction::make('view')->url(fn($record) => route('restaurant.detail', $record)),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),    
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

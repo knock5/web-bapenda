@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\RestaurantController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
-
 Route::get('/restaurants/{restaurant}', [RestaurantController::class, 'show'])->name('restaurant.detail');
 Route::get('/hotels/{hotel}', [HotelController::class, 'show'])->name('hotel.detail');
+
+Route::post('/resto-transaksi', [RestaurantController::class, 'transaksi'])->name('user.transaksi');

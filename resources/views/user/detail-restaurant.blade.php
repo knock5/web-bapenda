@@ -88,13 +88,71 @@
     </div>
 
     @if ($user->id === $restaurant->user_id && $restaurant->is_tax_paid === 0)
-      <div class="py-2">
-        <button class="btn btn-primary">Bayar Pajak</button>
+      <div class="pt-2 pb-4 text-center">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paymentModal">Bayar Pajak</button>
       </div>
     @endif
+
+    {{-- modal transaksi --}}
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="paymentModalLabel">Pembayaran Pajak</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="{{ route('user.transaksi') }}" method="POST">
+              @csrf
+              <div class="mb-3">
+                <label for="transactionId" class="form-label">Transaksi ID</label>
+                <input type="text" class="form-control" id="transactionId" name="transaction_number" readonly>
+              </div>
+              <div class="mb-3">
+                <input type="text" class="form-control" id="restaurantId" name="restaurant_id" value="{{ $restaurant->restaurant_id }}" readonly hidden>
+              </div>            
+              <div class="mb-3">
+                <input type="text" class="form-control" id="hotelId" name="hotel_id" readonly hidden>
+              </div>            
+              <div class="mb-3">
+                <label for="paymentMethod" class="form-label">Metode Pembayaran</label>
+                <select class="form-select" id="paymentMethod" name="payment_method" required>
+                  <option value="" selected hidden>Pilih metode pembayaran</option>
+                  <option value="BCA">BCA</option>
+                  <option value="BNI">BNI</option>
+                  <option value="BRI">BRI</option>
+                  <option value="Mandiri">Mandiri</option>
+                  <option value="DANA">DANA</option>
+                  <option value="Gopay">Gopay</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="taxRate" class="form-label">Pajak (%)</label>
+                <input type="text" class="form-control" id="taxRate" value="{{ $restaurant->tax_rate }}" readonly>
+              </div>
+              <div class="mb-3">
+                <input type="text" class="form-control" id="revenue" value="{{ $restaurant->revenue }}" hidden readonly>
+              </div>
+              <div class="mb-3">
+                <label for="ammount" class="form-label">Total Bayar Pajak (Rp)</label>
+                <input type="text" class="form-control" id="totalTax" name="ammount" readonly>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Bayar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
   </div>
 
   {{-- JS Bootstrap --}}
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  {{-- local JS --}}
+  <script src="{{ asset('js/resto-transaksi.js') }}"></script>
 </body>
 </html>

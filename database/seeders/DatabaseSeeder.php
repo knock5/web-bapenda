@@ -30,9 +30,9 @@ class DatabaseSeeder extends Seeder
         $userRole->givePermissionTo($viewUserDashboard);
 
         $admin = User::create([
-            'name'=>'lucy',
-            'email'=>'lucy@gmail.com',
-            'password'=> Hash::make('lucy123'),    
+            'name'=>'admin',
+            'email'=>'admin@gmail.com',
+            'password'=> Hash::make('admin123'),    
         ]);
 
         $user1 = User::create([

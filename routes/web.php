@@ -21,4 +21,5 @@ Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
 Route::get('/restaurants/{restaurant}', [RestaurantController::class, 'show'])->name('restaurant.detail');
 Route::get('/hotels/{hotel}', [HotelController::class, 'show'])->name('hotel.detail');
 
-Route::post('/resto-transaksi', [RestaurantController::class, 'transaksi'])->name('user.transaksi');
+Route::post('/resto-transaksi', [RestaurantController::class, 'transaksi'])->name('resto.transaksi');
+Route::post('/hotel-transaksi', [HotelController::class, 'transaksi'])->name('hotel.transaksi');

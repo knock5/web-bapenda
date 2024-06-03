@@ -50,6 +50,11 @@ class User extends Authenticatable
         return $this->hasRole('admin');
     }
 
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
+    }
+
     public function hotels()
     {
         return $this->hasMany(Hotel::class);

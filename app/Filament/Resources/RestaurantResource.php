@@ -83,15 +83,15 @@ class RestaurantResource extends Resource
                 TextColumn::make('user.name')->label('Pemilik')->getStateUsing(function ($record) {
                     return "{$record->user->name} (ID: {$record->user->id})";
                 })->sortable()->searchable(),
-                BadgeColumn::make('is_tax_paid')->label('Status')->getStateUsing(function ($record) {
+                BadgeColumn::make('is_tax_paid')->label('Status')->alignCenter()->getStateUsing(function ($record) {
                     return $record->is_tax_paid ? 'Lunas' : 'Belum Lunas';
                 })->colors([
                     'danger' => fn ($state) => $state === 'Belum Lunas',    
                     'success' => fn ($state) => $state === 'Lunas',    
                 ])->sortable()->searchable(),
-                TextColumn::make('address')->label('Alamat')->sortable()->searchable(),
-                TextColumn::make('tax_rate')->label('Pajak(%)')->sortable()->searchable(),
-                TextColumn::make('tax_due_date')->label('Jatuh Tempo')->sortable()->searchable(),
+                TextColumn::make('email')->label('Email')->alignCenter()->sortable()->searchable(),
+                TextColumn::make('tax_rate')->label('Pajak(%)')->alignCenter()->sortable()->searchable(),
+                TextColumn::make('tax_due_date')->label('Jatuh Tempo')->alignCenter()->sortable()->searchable(),
             ])
             ->filters([
                 //

@@ -104,8 +104,6 @@ class HotelResource extends Resource
                 ])->sortable()->searchable(),
                 TextColumn::make('address')->label('Alamat')->sortable()->searchable(),
                 TextColumn::make('rating')->label('Rating')->sortable()->searchable(),
-                TextColumn::make('tax_rate')->label('Pajak(%)')->sortable()->searchable(),
-                TextColumn::make('tax_due_date')->label('Jatuh Tempo')->sortable()->searchable(),
             ])
             ->filters([
                 //

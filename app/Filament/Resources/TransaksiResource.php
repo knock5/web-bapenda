@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\TransaksiResource\Pages;
 use App\Filament\Resources\TransaksiResource\RelationManagers;
 use App\Models\Pembayaran;
+use App\Models\Restaurant;
+use App\Models\Hotel;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,6 +16,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class TransaksiResource extends Resource
 {
@@ -21,12 +24,19 @@ class TransaksiResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $heading = 'Pembayaran';
+
     protected static ?string $navigationLabel = 'Data Pembayaran';
 
     protected static ?string $navigationGroup = 'Transaksi';
 
     protected static ?int $navigationSort = 3;
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+    
     public static function form(Form $form): Form
     {
         return $form
@@ -51,7 +61,7 @@ class TransaksiResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

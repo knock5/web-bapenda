@@ -46,11 +46,12 @@ class RestaurantController extends Controller
 
         // Mengupdate data restaurant
         $restaurant = Restaurant::find($request->restaurant_id);
+        $existingDueDate = Carbon::parse($restaurant->tax_due_date);
         $restaurant->is_tax_paid = true;
         $restaurant->last_tax_payment = Carbon::now();
-        $restaurant->tax_due_date = Carbon::now()->addMonth();
+        $restaurant->tax_due_date = $existingDueDate->addMonth();
         $restaurant->save();
 
-        return response()->json(['success' => true, 'pembayaran' => $pembayaran]);
+        return redirect()->back()->with('success', 'Pembayaran berhasil, Terima kasih telah membayar pajak');
     }
 }

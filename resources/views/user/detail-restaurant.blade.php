@@ -20,6 +20,15 @@
       </div>
     </div>
 
+    <div class="py-2">
+      @if(session('success'))
+        <div class="alert alert-success alert-dismissible text-center fade show" role="alert">
+          {{ session('success') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      @endif
+    </div>
+
     <div class="row py-2 justify-content-center">
       <div class="col-md-6">
         <table class="table table-bordered text-center">
@@ -102,7 +111,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form action="{{ route('user.transaksi') }}" method="POST">
+            <form action="{{ route('resto.transaksi') }}" method="POST">
               @csrf
               <div class="mb-3">
                 <label for="transactionId" class="form-label">Transaksi ID</label>
@@ -122,8 +131,6 @@
                   <option value="BNI">BNI</option>
                   <option value="BRI">BRI</option>
                   <option value="Mandiri">Mandiri</option>
-                  <option value="DANA">DANA</option>
-                  <option value="Gopay">Gopay</option>
                 </select>
               </div>
               <div class="mb-3">
@@ -136,6 +143,13 @@
               <div class="mb-3">
                 <label for="ammount" class="form-label">Total Bayar Pajak (Rp)</label>
                 <input type="text" class="form-control" id="totalTax" name="ammount" readonly>
+                @error('ammount')
+                <div class="invalid-feedback">{{$message}}</div>
+                @enderror
+              </div>
+              <div class="mb-3">
+                <label for="nomorVA" class="form-label" id="labelVA" hidden>Nomor Pembayaran VA</label>
+                <h3 class="text-success fw-bold" id="nomorVA" hidden></h3>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -153,6 +167,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
   {{-- local JS --}}
-  <script src="{{ asset('js/resto-transaksi.js') }}"></script>
+  <script src="{{ asset('js/transaksi.js') }}"></script>
 </body>
 </html>

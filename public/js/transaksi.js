@@ -3,10 +3,28 @@ document.addEventListener("DOMContentLoaded", function () {
     const taxRateInput = parseFloat(document.getElementById("taxRate").value);
     const revenueInput = document.getElementById("revenue");
     const totalTaxInput = document.getElementById("totalTax");
+    const selectInput = document.getElementById("paymentMethod");
+    const labelVA = document.getElementById("labelVA");
+    const nomorVA = document.getElementById("nomorVA");
 
     function generateTransactionId() {
         return Math.floor(Math.random() * 1000000000);
     }
+
+    function generateVANumber() {
+        return Math.floor(Math.random() * 10000000000000);
+    }
+
+    selectInput.addEventListener("change", () => {
+        if (selectInput.value !== "") {
+            nomorVA.textContent = generateVANumber();
+            nomorVA.hidden = false;
+            labelVA.hidden = false;
+        } else {
+            nomorVA.hidden = true;
+            labelVA.hidden = true;
+        }
+    });
 
     function calculateTotalTax() {
         const revenue = parseFloat(revenueInput.value);

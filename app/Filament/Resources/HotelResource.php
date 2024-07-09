@@ -102,8 +102,9 @@ class HotelResource extends Resource
                     'danger' => fn ($state) => $state === 'Belum Lunas',    
                     'success' => fn ($state) => $state === 'Lunas',    
                 ])->sortable()->searchable(),
-                TextColumn::make('address')->label('Alamat')->sortable()->searchable(),
-                TextColumn::make('rating')->label('Rating')->sortable()->searchable(),
+                TextColumn::make('email')->label('Email')->alignCenter()->sortable()->searchable(),
+                TextColumn::make('tax_rate')->label('Pajak(%)')->alignCenter()->sortable()->searchable(),
+                TextColumn::make('tax_due_date')->label('Jatuh Tempo')->dateTime('d F Y')->alignCenter()->sortable()->searchable(),
             ])
             ->filters([
                 //

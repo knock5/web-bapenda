@@ -75,11 +75,11 @@
             </tr>
             <tr>
               <td class="table-info">Tanggal Jatuh Tempo</td>
-              <td class="table-warning">{{ $restaurant->tax_due_date }}</td>
+              <td class="table-warning">{{ \Carbon\Carbon::parse($restaurant->tax_due_date)->format('d F Y') }}</td>
             </tr>
             <tr>
               <td class="table-info">Tanggal Pembayaran Terakhir</td>
-              <td class="table-warning">{{ $restaurant->last_tax_payment }}</td>
+              <td class="table-warning">{{ \Carbon\Carbon::parse($restaurant->last_tax_payment)->format('d F Y') }}</td>
             </tr>
             <tr>
               <td class="table-info">Status Pembayaran Pajak</td>

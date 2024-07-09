@@ -91,7 +91,7 @@ class RestaurantResource extends Resource
                 ])->sortable()->searchable(),
                 TextColumn::make('email')->label('Email')->alignCenter()->sortable()->searchable(),
                 TextColumn::make('tax_rate')->label('Pajak(%)')->alignCenter()->sortable()->searchable(),
-                TextColumn::make('tax_due_date')->label('Jatuh Tempo')->alignCenter()->sortable()->searchable(),
+                TextColumn::make('tax_due_date')->label('Jatuh Tempo')->dateTime('d F Y')->alignCenter()->sortable()->searchable(),
             ])
             ->filters([
                 //
